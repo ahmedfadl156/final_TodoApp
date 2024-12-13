@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playwrite+GB+S+Guides:ital@0;1&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root{
+    --background: #101114;
+    --primary-color: #1C1D20;
+    --secondary-color: #4A4D57;
+    --accent-color: #00FFC4;
+    --text-color: #F9F9F9;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul li{
+    list-style: none;
+}
+
+html{
+    font-family: "Merriweather", serif;
+    font-size: 20px;
+    color: var(--text-color);
+}
+
+body{
+    min-height: 100vh;
+    padding: 15px;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+h1{
+    margin-top: 120px;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    font-weight: 900;
+    text-align: center;
+    color: #059674;
+    text-align: center;
+    text-shadow: 0 0 5px #00FFC4,0 0 10px #00FFC4,0 0 15px #00FFC4,0 0 20px #00FFC4,0 0 25px #00FFC4,0 0 30px #00FFC4;
+    animation: shadow 0.5s infinite alternate;
+}
+
+.container{
+    max-width: 100%;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form{
+    position: relative;
+}
+
+#todo-input{
+    padding: 10px 20px;
+    width: 100%;
+    background: none;
+    border: 2px solid var(--secondary-color);
+    outline: none;
+    border-radius: 10000px;
+    font: inherit;
+    color: var(--accent-color);
+}
+
+#todo-input::placeholder{
+    font-size: 16px;
+}
+
+#add-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--accent-color);
+    border: none;
+    height: 100%;
+    padding: 0 20px;
+    border-radius: 1000px;
+    font: inherit;
+    font-weight: 500;
+    color: black;
+    cursor: pointer;
+}
+
+.todo-list{
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    padding: 0 15px;
+    background-color: var(--primary-color);
+}
+
+.list-tasks{
+    padding: 15px;
+    padding-right: 0;
+    flex-grow: 1;
+    transition: 0.3s ease;
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-button{
+    background: none;
+    border: none;
+    padding: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+}
+
+.delete-button:hover svg{
+    fill: red;
+    transition: 0.3s ease;
+}
+
+
+.edit-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-button svg {
+    fill: var(--secondary-color);
+    width: 24px;
+    height: 24px;
+}
+
+.edit-button svg:hover{
+    fill: rgb(0, 255, 21);
+}
+
+
+.edit-input {
+    background: none;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid var(--accent-color);
+    margin-left: 10px;
+    border-radius: 100000px;
+    outline: none;
+    color: var(--accent-color);
+    font-size: 1rem;
+}
+
+.check-box{
+    border: 2px solid var(--accent-color);
+    min-height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked ~ .check-box{
+    background-color: var(--accent-color);
+}
+
+input[type="checkbox"]:checked ~ .check-box svg{
+    fill: var(--primary-color);
+}
+
+input[type="checkbox"]:checked ~ .list-tasks{
+    text-decoration: line-through;
+    color: var(--secondary-color);
+}
+
+input[type="checkbox"]{
+    display: none;
+}
+
+#date-input{
+    padding: 5px 20px;
+    width: 26%;
+    background: none;
+    border: 2px solid var(--secondary-color);
+    outline: none;
+    border-radius: 10000px;
+    font: inherit;
+    color: var(--accent-color);
+}
+
+.due-date{
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.green {
+    color: rgb(0, 255, 21);
+}
+
+.red {
+    color: red;
+}
+
+::selection{
+    background-color: var(--accent-color);
+    color: #101114;
+}
+
+
+@media(max-width: 500px){
+    html{
+        font-size: 10px;
+    }
+
+    #add-button{
+        position: unset;
+        width: 100%;
+        margin-top: 15px;
+        height: auto;
+        padding:15px;
+    }
+
+    h1{
+        margin-top: 60px;
+    }
+    .due-date{
+        font-size: 8px;
+    }
+    #date-input{
+        width: 100%;
+    }
+    #todo-input::placeholder{
+        font-size: 10px;
+    }
+    .completed-label span{
+        font-size: 10px;
+    }
+}
+
+@keyframes shadow {
+    0% {
+        text-shadow: 
+            0 0 5px #00FFC4, 
+            0 0 10px #00FFC4, 
+            0 0 15px #00FFC4, 
+            0 0 20px #00FFC4, 
+            0 0 25px #00FFC4, 
+            0 0 30px #00FFC4;
+    }
+    100% {
+        text-shadow: 
+        0 0 10px #00FFC4, 
+        0 0 15px #00FFC4, 
+        0 0 20px #00FFC4, 
+        0 0 30px #00FFC4, 
+        0 0 35px #00FFC4, 
+        0 0 45px #00FFC4;
+    }
+}
