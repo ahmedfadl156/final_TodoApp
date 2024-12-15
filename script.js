@@ -164,13 +164,15 @@ function updateTodoList() {
 
 function getDueDateClass(dueDate) {
     if (!dueDate) return "";
-
     const now = new Date(); 
     const due = new Date(dueDate); 
-
     const diffHours = (due.getTime() - now.getTime()) / (1000 * 60 * 60); 
-
-    return diffHours > 12 ? "green" : "red";
+    if(diffHours > 12){
+        return "green";
+    }
+    else{
+        return "red";
+    }
 }
 
 
@@ -190,31 +192,5 @@ addButton.addEventListener("click", (e) => {
 
 updateTodoList();
 
-    //function saveTodosToLocalStorage() {
-    //     const todosArray = todoListLinkedList.AllTasksArray();
-    //     localStorage.setItem("todos", JSON.stringify(todosArray));
-    // }
-    
-    // function loadTodosFromLocalStorage() {
-    //     const todos = JSON.parse(localStorage.getItem("todos"));
-    //     if (todos) {
-    //         todos.forEach(todo => todoListLinkedList.add(todo));
-    //     }
-    //     updateTodoList();
-    // }
-    
-    // addButton.addEventListener("click", (e) => {
-    //     e.preventDefault();
-    //     const todoText = todoInput.value.trim();
-    //     if (todoText) {
-    //         const todo = { text: todoText, completed: false };
-    //         todoListLinkedList.add(todo);
-    //         saveTodosToLocalStorage();
-    //         updateTodoList();
-    //         todoInput.value = "";
-    //     }
-    // });
-    
-    // updateTodoList();
-    // window.onload = loadTodosFromLocalStorage;
+
     
