@@ -72,7 +72,6 @@ class LinkedList {
     }
 }
 
-
 const todoListLinkedList = new LinkedList();
 
 const todoInput = document.getElementById("todo-input");
@@ -130,13 +129,13 @@ function createTodoItem(todo, index) {
             editInput.style.display = "none";
             taskLabel.style.display = "inline";
             todo.text = editInput.value;
-            taskLabel.textContent = editInput.value;
-            editButton.innerHTML = ` <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
-            <path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5
-            22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>`;
+            if(todo.completed){
+                todo.completed = false;
+                todo.dueDate = todo.originalDueDate;
+            }
+            updateTodoList();
         }
     });
-
     return todoLI;
 }
 
@@ -163,11 +162,10 @@ function updateTodoList() {
 }
 
 function getDueDateClass(dueDate) {
-    if (!dueDate) return "";
     const now = new Date(); 
     const due = new Date(dueDate); 
     const diffHours = (due.getTime() - now.getTime()) / (1000 * 60 * 60); 
-    if(diffHours > 12){
+    if(diffHours >= 12){
         return "green";
     }
     else{
@@ -175,12 +173,22 @@ function getDueDateClass(dueDate) {
     }
 }
 
-
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
     const todoText = todoInput.value.trim();
     const dueDate = dateInput.value;
-
+    const errorMessage = document.getElementById("error-message");
+    if(!todoText){
+        errorMessage.textContent = "Please Enter A Task To Add";
+        errorMessage.style.display = "block";
+        return;
+    }
+    if(!dueDate){
+        errorMessage.textContent = "Please Enter A Due Date For The Task";
+        errorMessage.style.display = "block";
+        return;
+    }
+    errorMessage.style.display = "none";
     if (todoText) {
         const todo = { text: todoText, completed: false, dueDate: dueDate , originalDueDate: dueDate };
         todoListLinkedList.add(todo);
@@ -190,7 +198,6 @@ addButton.addEventListener("click", (e) => {
     }
 });
 
+
 updateTodoList();
 
-
-    
