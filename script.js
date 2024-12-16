@@ -100,7 +100,7 @@ function createTodoItem(todo, index) {
             Completed ✅
         </span>
         <span class="due-date ${getDueDateClass(todo.dueDate)}">
-        ${todo.dueDate ? "Due: " + new Date(todo.dueDate).toLocaleDateString('en-EG', { timeZone: 'Africa/Cairo' }) : ""}
+        ${todo.dueDate ? getDueDateClass(todo.dueDate) === "overdue" ? "The Date Is Overdue" : "Due: " + new Date(todo.dueDate).toLocaleDateString('en-EG', { timeZone: 'Africa/Cairo' }) : ""}
         </span>
         <button class="edit-button" data-index="${index}">
             <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -162,14 +162,19 @@ function updateTodoList() {
 }
 
 function getDueDateClass(dueDate) {
-    const now = new Date(); 
-    const due = new Date(dueDate); 
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0); 
     const diffHours = (due.getTime() - now.getTime()) / (1000 * 60 * 60); 
+    if(diffHours < 0){
+        return "overdue";
+    }
     if(diffHours >= 12){
         return "green";
     }
     else{
-        return "red";
+        return "orange";
     }
 }
 
