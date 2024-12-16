@@ -40,7 +40,7 @@ h1{
     font-size: 3rem;
     font-weight: 900;
     text-align: center;
-    color: #059674;
+    color: #09cc9f;
     text-align: center;
     text-shadow: 0 0 5px #00FFC4,0 0 10px #00FFC4,0 0 15px #00FFC4,0 0 20px #00FFC4,0 0 25px #00FFC4,0 0 30px #00FFC4;
     animation: shadow 0.5s infinite alternate;
@@ -136,7 +136,7 @@ form{
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} 
 
 .edit-button svg {
     fill: var(--secondary-color);
@@ -148,7 +148,6 @@ form{
     fill: rgb(0, 255, 21);
 }
 
-
 .edit-input {
     background: none;
     padding: 10px;
@@ -159,7 +158,7 @@ form{
     outline: none;
     color: var(--accent-color);
     font-size: 1rem;
-}
+} 
 
 .check-box{
     border: 2px solid var(--accent-color);
@@ -201,6 +200,7 @@ input[type="checkbox"]{
     font: inherit;
     color: var(--accent-color);
 }
+
 
 .due-date{
     font-size: 12px;
