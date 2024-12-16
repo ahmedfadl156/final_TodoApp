@@ -211,10 +211,13 @@ input[type="checkbox"]{
     color: rgb(0, 255, 21);
 }
 
-.red {
+.due-date.overdue {
     color: red;
 }
 
+.orange{
+    color: orange;
+}
 ::selection{
     background-color: var(--accent-color);
     color: #101114;
