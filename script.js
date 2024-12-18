@@ -11,15 +11,13 @@ class LinkedList {
         this.size = 0;  
     }
 
-    add(todo){
+    add(todo) {
         const newNode = new Node(todo);
-        if(this.head == null)
-        {
+        if (this.head == null) {
             this.head = newNode;
-        }
-        else{
+        } else {
             let current = this.head;
-            while(current.next != null){
+            while (current.next != null) {
                 current = current.next;
             }
             current.next = newNode;
@@ -40,23 +38,22 @@ class LinkedList {
                 prev = current; 
                 current = current.next; 
             }
-                prev.next = current.next;
+            prev.next = current.next;
         }
         this.size--; 
     }
 
-    completedTask(index){
+    completedTask(index) {
         let current = this.head;
-        for(let i = 0 ; i < index ; i++){
+        for (let i = 0; i < index; i++) {
             current = current.next;
         }
-        if(current){
+        if (current) {
             current.todo.completed = !current.todo.completed;
         }
         if (current.todo.completed) {
             current.todo.dueDate = null;
-        }
-        else {
+        } else {
             current.todo.dueDate = current.todo.originalDueDate;
         }
     }
@@ -79,8 +76,6 @@ const addButton = document.getElementById("add-button");
 const todoList = document.getElementById("todo-list");
 const dateInput = document.getElementById("date-input");
 
-
-
 function createTodoItem(todo, index) {
     const todoId = "todo-" + index;
     const todoLI = document.createElement("li");
@@ -92,7 +87,7 @@ function createTodoItem(todo, index) {
                 <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
             </svg>
         </label>
-        <input class="edit-input" type="text" value=" ${todo.text}" style="display: none;">
+        <input class="edit-input" type="text" value="${todo.text}" style="display: none;">
         <label for="${todoId}" class="list-tasks" style="${todo.completed ? 'text-decoration: line-through; color: var(--secondary-color);' : ''}">
             ${todo.text}
         </label>
@@ -104,7 +99,8 @@ function createTodoItem(todo, index) {
         </span>
         <button class="edit-button" data-index="${index}">
             <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
-            <path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z"/></svg>
+            <path d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 
+            85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z"/></svg>
         </button>
         <button class="delete-button" data-index="${index}">
             <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
@@ -129,7 +125,7 @@ function createTodoItem(todo, index) {
             editInput.style.display = "none";
             taskLabel.style.display = "inline";
             todo.text = editInput.value;
-            if(todo.completed){
+            if (todo.completed) {
                 todo.completed = false;
                 todo.dueDate = todo.originalDueDate;
             }
@@ -146,7 +142,6 @@ function updateTodoList() {
         const todoItem = createTodoItem(todo, index);
         todoList.appendChild(todoItem);
 
-        
         const deleteButton = todoItem.querySelector(".delete-button");
         deleteButton.addEventListener("click", () => {
             todoListLinkedList.delete(index);
@@ -161,19 +156,55 @@ function updateTodoList() {
     });
 }
 
+function filterTasks() {
+    const filterSelect = document.getElementById("task_filter");
+    const todoList = document.getElementById("todo-list");
+    const allTasks = todoListLinkedList.AllTasksArray(); 
+    todoList.innerHTML = "";
+    const filteredTasks = allTasks.filter(task => {
+        if (filterSelect.value === 'completed') {
+            return task.completed;
+            
+        } else if (filterSelect.value === 'not_completed') {
+            return !task.completed;
+        } else {
+            return true; 
+        }
+        
+    });
+
+    filteredTasks.forEach((task, index) => {
+        const todoItem = createTodoItem(task, allTasks.indexOf(task));
+        todoList.appendChild(todoItem);
+
+        const checkbox = todoItem.querySelector("input[type='checkbox']");
+        checkbox.addEventListener("change", () => {
+            todoListLinkedList.completedTask(allTasks.indexOf(task));
+            updateTodoList();
+            filterTasks();
+        });
+
+        const deleteButton = todoItem.querySelector(".delete-button");
+        deleteButton.addEventListener("click", () => {
+            todoListLinkedList.delete(allTasks.indexOf(task));
+            updateTodoList();
+            filterTasks();
+        });
+    });
+}
+
 function getDueDateClass(dueDate) {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
     const due = new Date(dueDate);
     due.setHours(0, 0, 0, 0); 
     const diffHours = (due.getTime() - now.getTime()) / (1000 * 60 * 60); 
-    if(diffHours < 0){
+    if (diffHours < 0) {
         return "overdue";
     }
-    if(diffHours >= 12){
+    if (diffHours >= 12) {
         return "green";
-    }
-    else{
+    } else {
         return "orange";
     }
 }
@@ -183,19 +214,19 @@ addButton.addEventListener("click", (e) => {
     const todoText = todoInput.value.trim();
     const dueDate = dateInput.value;
     const errorMessage = document.getElementById("error-message");
-    if(!todoText){
+    if (!todoText) {
         errorMessage.textContent = "Please Enter A Task To Add";
         errorMessage.style.display = "block";
         return;
     }
-    if(!dueDate){
+    if (!dueDate) {
         errorMessage.textContent = "Please Enter A Due Date For The Task";
         errorMessage.style.display = "block";
         return;
     }
     errorMessage.style.display = "none";
     if (todoText) {
-        const todo = { text: todoText, completed: false, dueDate: dueDate , originalDueDate: dueDate };
+        const todo = { text: todoText, completed: false, dueDate: dueDate, originalDueDate: dueDate };
         todoListLinkedList.add(todo);
         updateTodoList();
         todoInput.value = "";
@@ -203,6 +234,4 @@ addButton.addEventListener("click", (e) => {
     }
 });
 
-
 updateTodoList();
-
