@@ -14,7 +14,14 @@
         <input id="todo-input" type="text" placeholder="Write Anything To Add To The List And Choose Due Time" autocomplete="off">
         <button id="add-button">Add Task</button>
         </form>
-        <input type="date" id="date-input" placeholder="Select Date">
+        <form action="" style="display: flex; justify-content: space-between;">
+            <input type="date" id="date-input" placeholder="Select Date">
+            <select id="task_filter" onchange="filterTasks()">
+                <option value="all">All Tasks</option>
+                <option value="completed" style="color: rgb(0, 255, 21);" class="completed">Completed</option>
+                <option value="not_completed" style="color: red;">Not Completed</option>
+            </select>
+        </form>
         <ul id="todo-list">
         <li class="todo-list">
             <input type="checkbox" id="todo-1">
