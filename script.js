@@ -76,6 +76,7 @@ const addButton = document.getElementById("add-button");
 const todoList = document.getElementById("todo-list");
 const dateInput = document.getElementById("date-input");
 
+
 function createTodoItem(todo, index) {
     const todoId = "todo-" + index;
     const todoLI = document.createElement("li");
@@ -235,3 +236,14 @@ addButton.addEventListener("click", (e) => {
 });
 
 updateTodoList();
+
+const themeToggle = document.getElementById('input');
+const rootElement = document.documentElement;
+
+themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+        rootElement.classList.remove('light-mode');
+    } else {
+        rootElement.classList.add('light-mode');
+    }
+});
